@@ -23,7 +23,6 @@ namespace COMNet
     {
         public MainWindow()
         {
-            var q = new ByteConverter();
             InitializeComponent();
         }
     }

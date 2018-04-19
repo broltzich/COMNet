@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Core.Convert;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +15,12 @@ namespace Core.Tests
         [Fact]
         public void EmptyStringToByteArray_ShouldReturnEmptyArray()
         {
+            var input = "c";
+            var converter = new BitStringConverter();
+           
+            var output = converter.StringToBits(input);
 
+            Assert.True(false);//Equals(output, new BitArray(new int[] { 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 })));
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Core.Convert
 {
-    public class BinStringConverter
+    public class BitStringConverter
     {
         public BitArray StringToBits(string input)
         {
