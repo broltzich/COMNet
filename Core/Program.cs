@@ -62,7 +62,8 @@ namespace Core
             Console.Write("PortName: ");
             _serialPort = new SerialPort();
             try
-            { 
+            {
+                
                 _serialPort.PortName = Console.ReadLine();
                 _serialPort.BaudRate = 256000;
                 _serialPort.Parity = Parity.None;
@@ -92,38 +93,6 @@ namespace Core
                 Console.WriteLine("Income message: {0}", _serialPort.ReadLine());
             }
             return;
-        }
-
-        public static void Read()
-        {
-            while (_continue)
-            {
-                try
-                {
-                    string message = _serialPort.ReadLine();
-                    Console.WriteLine(message);
-                }
-                catch (TimeoutException) { }
-            }
-        }
-
-        static void Decode()
-        {
-            var input = ReadArray();
-            BitArray decoded;
-
-            try
-            {
-                HammingCode.Decode(input);
-            }
-            catch(TooManyErrorsException e)
-            {
-
-            }
-            catch(Exception e)
-            {
-
-            }
         }
     }
 }
