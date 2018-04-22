@@ -8,6 +8,7 @@ using Core.Convert;
 using System.Collections;
 using System.IO.Ports;
 using System.Threading;
+using Core.Workstation;
 
 namespace Core
 {
@@ -19,7 +20,7 @@ namespace Core
         static void Main(string[] args)
         {
             
-            var input = ReadArray();
+            var input = ReadFile();
             /*
             var encoded = HammingCode.Encode(input);
             var decoded = HammingCode.Decode(encoded);
@@ -28,7 +29,12 @@ namespace Core
             File.WriteAllBytes("D:/Projects/COMNet/new_message.txt", bytes);
             Print(decoded);
             */
-            PortConnection();
+            PC WS1 = new PC("Workstation1", "COM8", "COM3");
+            PC WS2 = new PC("Workstation2", "COM4", "COM5");
+            WS1.Login();
+            WS2.Login();
+            Thread readThread = new Thread();
+
             Console.WriteLine("End...");
             Console.ReadKey();
         }
@@ -47,52 +53,11 @@ namespace Core
             Console.WriteLine(sb);
         }
 
-        static BitArray ReadArray()
+        static byte[] ReadFile()
         {
-            string file = "D:/Projects/COMNet/message.txt";
+            string file = "D:/Projects/COMNet/large_text.txt";
             byte[] byte_array = File.ReadAllBytes(file);
-            return new BitArray(byte_array);
-        }
-
-        static void PortConnection()
-        {
-            string[] ports = SerialPort.GetPortNames();
-            foreach (string i in ports)
-                Console.WriteLine(i);
-            Console.Write("PortName: ");
-            _serialPort = new SerialPort();
-            try
-            {
-                
-                _serialPort.PortName = Console.ReadLine();
-                _serialPort.BaudRate = 256000;
-                _serialPort.Parity = Parity.None;
-                _serialPort.DataBits = 7;
-                _serialPort.StopBits = StopBits.One;
-                _serialPort.ReadTimeout = 1000;
-                _serialPort.WriteTimeout = 1000;
-                _serialPort.Open();
-                
-            } 
-            catch(Exception e)
-            {
-                Console.WriteLine("ERROR: cannot open the port");
-                return;
-            }
-            Console.WriteLine("Choose: [send] or [get]");
-            string action = Console.ReadLine();
-            if (action == "send")
-            {
-                Console.WriteLine("Type your message:");
-                string message = Console.ReadLine();
-                _serialPort.WriteLine(message);
-                Console.WriteLine("Sended...");
-            }
-            else if (action == "get")
-            {
-                Console.WriteLine("Income message: {0}", _serialPort.ReadLine());
-            }
-            return;
+            return byte_array;
         }
     }
 }

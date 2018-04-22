@@ -44,12 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WorkstationType.cs" />
     <Compile Include="Convert\BitStringConverter.cs" />
     <Compile Include="Convert\HammingCode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TooManyErrorsException.cs" />
-    <Compile Include="Workstation.cs" />
+    <Compile Include="Workstation\Workstation.cs" />
+    <Compile Include="Workstation\PortFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
