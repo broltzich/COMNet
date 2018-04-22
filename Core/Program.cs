@@ -33,7 +33,7 @@ namespace Core
             PC WS2 = new PC("Workstation2", "COM4", "COM5");
             WS1.Login();
             WS2.Login();
-            Thread readThread = new Thread();
+            //Thread readThread = new Thread();
 
             Console.WriteLine("End...");
             Console.ReadKey();

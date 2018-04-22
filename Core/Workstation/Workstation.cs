@@ -49,20 +49,13 @@ namespace Core.Workstation
             int pos = 0;
             while (COM_in.BytesToRead > 0)
             {
-                try
-                {
                     int bytesRead = 0;
-                    do
-                    {
-                        byte[] buff = new byte[1024];
-                        bytesRead = COM_in.Read(buff, pos, buff.Length);
+                    byte[] buff = new byte[1024];
+                    bytesRead = COM_in.Read(buff, pos, buff.Length);
 
-                        if (bytesRead > 0)
-                            result.Add(buff);
-                    } while (bytesRead > 0);
-                }
-                catch (TimeoutException) { }
+                    result.Add(buff.Take(bytesRead).ToArray());
             }
+
             var byteCount = (result.Count - 1) * 1024 + result.Last().Length;
             var resultBytes = new byte[byteCount];
 
