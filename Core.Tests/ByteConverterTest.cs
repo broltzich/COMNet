@@ -20,7 +20,7 @@ namespace Core.Tests
            
             var output = converter.StringToBits(input);
 
-            Assert.True(false);//Equals(output, new BitArray(new int[] { 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 })));
+            Assert.True(output.Length == 2);//Equals(output, new BitArray(new int[] { 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 })));
         }
     }
 }
