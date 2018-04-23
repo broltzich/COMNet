@@ -9,33 +9,32 @@ using System.Collections;
 using System.IO.Ports;
 using System.Threading;
 using Core.Workstation;
+using System.Configuration;
 
 namespace Core
 {
     class Program
     {
-        static bool _continue;
-        static SerialPort _serialPort;
-
         static void Main(string[] args)
         {
-            
-            var input = ReadFile();
-            /*
-            var encoded = HammingCode.Encode(input);
-            var decoded = HammingCode.Decode(encoded);
-            byte[] bytes = new byte[(decoded.Length - 1) / 8 + 1];
-            decoded.CopyTo(bytes, 0);
-            File.WriteAllBytes("D:/Projects/COMNet/new_message.txt", bytes);
-            Print(decoded);
-            */
-            PC WS1 = new PC("Workstation1", "COM8", "COM3");
-            PC WS2 = new PC("Workstation2", "COM4", "COM5");
-            WS1.Login();
-            WS2.Login();
-            //Thread readThread = new Thread();
+            string file = "D:/Projects/COMNet/large_text.txt";
+            var input = ReadFile(file);
 
-            Console.WriteLine("End...");
+            var com1 = ConfigurationManager.AppSettings["com1"];
+            var com2 = ConfigurationManager.AppSettings["com2"];
+            var name = ConfigurationManager.AppSettings["name"];
+
+            PC WS = new PC(name, com1, com2);
+            WS.Login();
+            Console.WriteLine("Actions: [send] [wait]");
+            string choice = "";
+            while (choice != "exit")
+            {
+                choice = Console.ReadLine();
+                if (choice == "send")
+                    WS.WriteBuff(input);
+                else if (choice == "checkBuffer");
+            }
             Console.ReadKey();
         }
         
@@ -53,11 +52,15 @@ namespace Core
             Console.WriteLine(sb);
         }
 
-        static byte[] ReadFile()
+        static byte[] ReadFile(string path)
         {
-            string file = "D:/Projects/COMNet/large_text.txt";
-            byte[] byte_array = File.ReadAllBytes(file);
+            byte[] byte_array = File.ReadAllBytes(path);
             return byte_array;
+        }
+
+        static void SendData(byte[] byteArr)
+        {
+            
         }
     }
 }

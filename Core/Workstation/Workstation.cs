@@ -13,6 +13,7 @@ namespace Core.Workstation
         SerialPort COM_in;
         SerialPort COM_out;
         string WorkName;
+        enum TransferingState { pass, send, receive }
         
         public PC(string PCName, string inPort, string outPort)
         {
@@ -29,51 +30,33 @@ namespace Core.Workstation
                 COM_out.Open();
                 Console.WriteLine("[{0}] successfully logged in", WorkName);
             }
-            catch (Exception e)
-            {
-                Console.WriteLine("ERROR: cannot open the ports");
-                return;
-            }
+            catch (Exception e) { Console.WriteLine("ERROR: cannot open the ports ({0}", e); return; }
 
         }
 
         private void COM_in_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             var bytes = ReadBuff();
-
+            try
+            {
+                File.WriteAllBytes("D:/Projects/COMNet/received_file.txt", bytes);
+                Console.WriteLine("File received!");
+            }
+            catch (Exception ee) { Console.WriteLine("ERROR: {0}", ee.ToString()); return; }
         }
 
         public byte[] ReadBuff()
         {
-            var result = new List<byte[]>();
-            int pos = 0;
-            while (COM_in.BytesToRead > 0)
-            {
-                    int bytesRead = 0;
-                    byte[] buff = new byte[1024];
-                    bytesRead = COM_in.Read(buff, pos, buff.Length);
-
-                    result.Add(buff.Take(bytesRead).ToArray());
-            }
-
-            var byteCount = (result.Count - 1) * 1024 + result.Last().Length;
-            var resultBytes = new byte[byteCount];
-
-            var index = 0;
-            foreach(var arr in result)
-            {
-                Array.Copy(arr, 0, resultBytes, index, arr.Length);
-                index += 1024;
-            }
-
-            return resultBytes;
-
+            var buff = new byte[COM_in.BytesToRead];
+            COM_in.Read(buff, 0, buff.Length);
+            return buff;
         }
 
         public void WriteBuff(byte[] input)
         {
-            int pos = 0;
             COM_out.DiscardOutBuffer();
+            COM_out.Write(input, 0, input.Length);
+            /*
             if (COM_out.BytesToWrite == 0)
             {
                 while (pos < input.Length)
@@ -85,6 +68,7 @@ namespace Core.Workstation
                     COM_out.DiscardOutBuffer();
                 }
             }
+            */
         }
 
         // Переда
@@ -103,6 +87,6 @@ namespace Core.Workstation
 
 
         }
-        
+
     }
 }
