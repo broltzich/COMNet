@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrameFactory\FieldType.cs" />
+    <Compile Include="FrameFactory\Frame.cs" />
     <Compile Include="WorkstationType.cs" />
     <Compile Include="Convert\BitStringConverter.cs" />
     <Compile Include="Convert\HammingCode.cs" />
@@ -55,7 +57,9 @@
     <Compile Include="Workstation\PortFactory.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

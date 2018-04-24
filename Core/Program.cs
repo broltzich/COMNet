@@ -33,7 +33,10 @@ namespace Core
                 choice = Console.ReadLine();
                 if (choice == "send")
                     WS.WriteBuff(input);
-                else if (choice == "checkBuffer");
+                else if (choice == "check")
+                {
+                    WS.CheckBuffers();
+                }
             }
             Console.ReadKey();
         }

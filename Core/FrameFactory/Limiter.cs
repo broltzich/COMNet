@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core
+namespace Core.FrameFactory
 {
-    public enum WorkstationType : byte
+    public enum Limiter : byte
     {
-        Workstation1 = 1,
-        Workstation2 = 2,
-        Workstation3 = 3
+        start = 255,
+        stop = 254
     }
 }

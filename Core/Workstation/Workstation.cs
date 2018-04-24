@@ -8,11 +8,13 @@ using System.IO;
 
 namespace Core.Workstation
 {
+    
     class PC : IDisposable
     {
         SerialPort COM_in;
         SerialPort COM_out;
         string WorkName;
+        List<byte[]> intetnalBuffer;
         enum TransferingState { pass, send, receive }
         
         public PC(string PCName, string inPort, string outPort)
@@ -39,7 +41,8 @@ namespace Core.Workstation
             var bytes = ReadBuff();
             try
             {
-                File.WriteAllBytes("D:/Projects/COMNet/received_file.txt", bytes);
+                // File.WriteAllBytes("D:/Projects/COMNet/received_file.txt", bytes);
+                CheckBuffers();
                 Console.WriteLine("File received!");
             }
             catch (Exception ee) { Console.WriteLine("ERROR: {0}", ee.ToString()); return; }
@@ -54,12 +57,11 @@ namespace Core.Workstation
 
         public void WriteBuff(byte[] input)
         {
-            COM_out.DiscardOutBuffer();
-            COM_out.Write(input, 0, input.Length);
-            /*
+            int pos = 0;
+            
             if (COM_out.BytesToWrite == 0)
             {
-                while (pos < input.Length)
+                while (pos < input.Length - 1)
                 {
                     var dif = input.Length - pos;
                     dif = dif < 1024 ? dif : 1024;
@@ -68,7 +70,7 @@ namespace Core.Workstation
                     COM_out.DiscardOutBuffer();
                 }
             }
-            */
+            
         }
 
         // Переда
@@ -84,9 +86,11 @@ namespace Core.Workstation
                 COM_in.Close();
                 COM_in.Dispose();
             }
-
-
         }
-
+        public void CheckBuffers()
+        {
+            Console.WriteLine("BytesToRead: {0}", COM_in.BytesToRead);
+            Console.WriteLine("BytesToWrite: {0}", COM_out.BytesToWrite);
+        }
     }
 }
