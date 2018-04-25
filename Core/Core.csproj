@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="FrameFactory\FieldType.cs" />
     <Compile Include="FrameFactory\Frame.cs" />
+    <Compile Include="FrameFactory\Limiter.cs" />
     <Compile Include="WorkstationType.cs" />
     <Compile Include="Convert\BitStringConverter.cs" />
     <Compile Include="Convert\HammingCode.cs" />
