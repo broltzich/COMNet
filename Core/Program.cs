@@ -24,8 +24,8 @@ namespace Core
             var com2 = ConfigurationManager.AppSettings["com2"];
             var name = ConfigurationManager.AppSettings["name"];
 
-            int size = 1029;
-            Console.WriteLine("AAAA: {0}", (size % 1024).ToString());
+            byte size = (byte)FrameFactory.FieldType.ACK;
+            Console.WriteLine("AAAA: {0}", size.ToString());
 
             PC WS = new PC(name, com1, com2);
             WS.Login();

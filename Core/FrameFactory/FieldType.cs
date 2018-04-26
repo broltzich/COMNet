@@ -12,7 +12,7 @@ namespace Core.FrameFactory
         disconnection = 2,
         ACK = 65,
         NAK = 66,
-        message_read = 112,
+        file_opening = 112,
 
         file_title = 17,
         info = 18,

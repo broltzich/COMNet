@@ -46,9 +46,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FrameFactory\FieldType.cs" />
-    <Compile Include="FrameFactory\Frame.cs" />
+    <Compile Include="FrameFactory\DataFrame.cs" />
     <Compile Include="FrameFactory\Limiter.cs" />
-    <Compile Include="WorkstationType.cs" />
+    <Compile Include="FrameFactory\ServiceFrame.cs" />
+    <Compile Include="Workstation\WorkstationType.cs" />
     <Compile Include="Convert\BitStringConverter.cs" />
     <Compile Include="Convert\HammingCode.cs" />
     <Compile Include="Program.cs" />

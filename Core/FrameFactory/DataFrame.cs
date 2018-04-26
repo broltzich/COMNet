@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Core.FrameFactory
 {
-    class Frame
+    public class DataFrame
     {
-        public static List<byte[]> MakeDataFrames(FieldType type, WorkstationType sender, WorkstationType recipient, byte[] data = null)
+        public static List<byte[]> MakeDataFrames(FieldType type, WorkstationType sender, WorkstationType recipient, byte[] data)
         {
             int blockSize = 1024;
             byte[] dataBlockSize = BitConverter.GetBytes(blockSize);
@@ -39,10 +39,8 @@ namespace Core.FrameFactory
                 frameList.Add(newFrame);
                 pos += 1024;
             }
-
-
-
-            return null;
+            return frameList;
         }
+        
     }
 }
