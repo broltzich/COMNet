@@ -8,13 +8,15 @@ namespace Core.FrameFactory
 {
     public enum FieldType : byte
     {
-        connection = 1,
-        disconnection = 2,
-        ACK = 65,
-        NAK = 66,
-        file_opening = 112,
-
-        file_title = 17,
-        info = 18,
+        link = 1,
+        unlink = 2,
+        connect = 3,
+        disconnect = 4,
+        data = 5,
+        title = 6,
+        openfile = 7,
+        ACK = 8,
+        NAK = 9,
+        token = 128
     }
 }

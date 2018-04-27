@@ -6,27 +6,31 @@ using System.Threading.Tasks;
 
 namespace Core.FrameFactory
 {
-    class ServiceFrame
+    public class ServiceFrame
     {
-        public byte[] Connect(WorkstationType sender, WorkstationType recipient)
+        public byte[] GetLinkFrame(WorkstationType sender, WorkstationType recipient)
         {
-            return new byte[] { (byte)Limiter.start, (byte)FieldType.connection, (byte)sender, (byte)recipient, (byte)Limiter.stop };
+            return new byte[] { (byte)Limiter.start, (byte)FieldType.link, (byte)sender, (byte)recipient, (byte)Limiter.stop };
         }
-        public byte[] Disconnect(WorkstationType sender, WorkstationType recipient)
+        public byte[] GetUnlinkFrame(WorkstationType sender, WorkstationType recipient)
         {
-            return new byte[] { (byte)Limiter.start, (byte)FieldType.disconnection, (byte)sender, (byte)recipient, (byte)Limiter.stop };
+            return new byte[] { (byte)Limiter.start, (byte)FieldType.unlink, (byte)sender, (byte)recipient, (byte)Limiter.stop };
         }
-        public byte[] ACK(WorkstationType sender, WorkstationType recipient)
+        public byte[] GetACKFrame(WorkstationType sender, WorkstationType recipient)
         {
             return new byte[] { (byte)Limiter.start, (byte)FieldType.ACK, (byte)sender, (byte)recipient, (byte)Limiter.stop };
         }
-        public byte[] NAK(WorkstationType sender, WorkstationType recipient)
+        public byte[] GetNAKFrame(WorkstationType sender, WorkstationType recipient)
         {
             return new byte[] { (byte)Limiter.start, (byte)FieldType.NAK, (byte)sender, (byte)recipient, (byte)Limiter.stop };
         }
-        public byte[] OpenFile(WorkstationType sender, WorkstationType recipient)
+        public byte[] GetOpenfileFrame(WorkstationType sender, WorkstationType recipient)
         {
-            return new byte[] { (byte)Limiter.start, (byte)FieldType.file_opening, (byte)sender, (byte)recipient, (byte)Limiter.stop };
+            return new byte[] { (byte)Limiter.start, (byte)FieldType.openfile, (byte)sender, (byte)recipient, (byte)Limiter.stop };
+        }
+        public byte[] GetTokenFrame()
+        {
+            return new byte[] { (byte)Limiter.start, (byte)FieldType.token, (byte)Limiter.stop };
         }
     }
 }

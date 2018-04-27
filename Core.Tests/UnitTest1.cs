@@ -1,6 +1,7 @@
 using Core.FrameFactory;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Xunit;
 
 namespace Core.Tests
@@ -10,14 +11,10 @@ namespace Core.Tests
         [Fact]
         public void Test1()
         {
-            var data = 
-            var frames = DataFrame.MakeDataFrames();
-            var expected = new List<byte[]>
-            {
-
-            };
-            Assert.True(frames.Count == 23);
-            Assert.True(Array.Equals(frames, expected));
+            string path = "D:/Projects/COMNet/message.txt";
+            byte[] bytes = File.ReadAllBytes(path);
+            var frameList = DataFrame.GetFrame(WorkstationType.Workstation1, WorkstationType.Workstation2, bytes);
+            Assert.True(frameList.Count == 1 && frameList[0].Length == 19);
         }
     }
 }

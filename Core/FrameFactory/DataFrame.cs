@@ -8,7 +8,8 @@ namespace Core.FrameFactory
 {
     public class DataFrame
     {
-        public static List<byte[]> MakeDataFrames(FieldType type, WorkstationType sender, WorkstationType recipient, byte[] data)
+        // принимает на вход массив (закодированный) байт и выдает список кадров в виде списка байтовых массивов
+        public static List<byte[]> GetFrame(WorkstationType sender, WorkstationType recipient, byte[] data)
         {
             int blockSize = 1024;
             byte[] dataBlockSize = BitConverter.GetBytes(blockSize);
@@ -16,23 +17,26 @@ namespace Core.FrameFactory
             List<byte[]> frameList = new List<byte[]>();
             while(data.Length > pos)
             {
-                int endIndex;
-                byte[] newFrame = new byte[1024];
+                byte[] newFrame;
+                if (data.Length / blockSize == 0)
+                    newFrame = new byte[data.Length % blockSize + 9];
+                else
+                    newFrame = new byte[1024];
                 newFrame[0] = (byte)Limiter.start;
-                newFrame[1] = (byte)type;
+                newFrame[1] = (byte)FieldType.data;
                 newFrame[2] = (byte)sender;
                 newFrame[3] = (byte)recipient;
                 if (data.Length - pos >= blockSize)
                 {
                     Array.Copy(dataBlockSize, 0, newFrame, 4, 4);
-                    Array.Copy(data, pos, newFrame, 5, 1024);
+                    Array.Copy(data, pos, newFrame, 8, 1024);
                     newFrame[1028] = (byte)Limiter.stop;
                 }
                 else
                 {
                     int lowerBlockSize = data.Length % blockSize;
                     Array.Copy(BitConverter.GetBytes(lowerBlockSize), 0, newFrame, 4, 4);
-                    Array.Copy(data, pos, newFrame, 5, lowerBlockSize);
+                    Array.Copy(data, pos, newFrame, 8, lowerBlockSize);
                     newFrame[3+lowerBlockSize] = (byte)Limiter.stop;
                 }
                 
